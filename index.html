@@ -750,7 +750,7 @@
 <div class="hero">
   <div class="hero-eyebrow">Peer Feedback Programme</div>
   <h1>Line manager submission</h1>
-  <p>Select your employees and their five feedback providers below. Hit Submit when complete — responses go directly to SharePoint and Power Automate sends all feedback requests automatically.</p>
+  <p>Select your team members below and choose their feedback providers to get started.</p>
 </div>
 
 <!-- Page body -->
@@ -760,7 +760,7 @@
 
   <div class="instructions">
     <div class="instructions-icon">→</div>
-    <p><strong>How this works:</strong> Your direct reports are pre-filled below. Choose exactly <strong>5 colleagues</strong> to give feedback for each employee — names auto-complete from the staff directory and email fills in automatically. Hit <strong>Submit</strong> and everything is sent directly to SharePoint — Power Automate will email all colleagues automatically.</p>
+    <p><strong>How this works:</strong> For each of your team members, select five colleagues (feedback providers) below. Once done, hit <strong>Submit</strong> — the respective colleagues then receive an email requesting their feedback for the specific team member along with the deadline you set mentioned in the email. Their responses are then emailed to you once completed for your reference.</p>
   </div>
 
   <!-- Manager details -->
@@ -1229,6 +1229,10 @@ function removeEmployee(e, id) {
 
 function addReviewer(empId) {
   if (!employees[empId]) return;
+  if (employees[empId].reviewers.length >= 5) {
+    showToast('Maximum 5 colleagues per employee.', 'error');
+    return;
+  }
   reviewerCount++;
   const rid = reviewerCount;
   employees[empId].reviewers.push(rid);
@@ -1275,6 +1279,7 @@ function updateRevCounter(empId) {
   if (counter) { counter.textContent = `${count} reviewer${count!==1?'s':''}`;  }
   const meta = document.getElementById(`emp-hmeta-${empId}`);
   if (meta) meta.textContent = `${count} reviewer${count!==1?'s':''}  added`;
+  if (btn) btn.disabled = count >= 5;
 }
 
 function updateSummary() {

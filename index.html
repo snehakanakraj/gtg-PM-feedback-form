@@ -226,6 +226,8 @@
     line-height: 1.6;
   }
   .instructions p strong { font-weight: 700; color: var(--teal-deep); }
+  .instructions-text { flex: 1; }
+  .instructions-text p + p { margin-top: 10px; }
 
   /* ── Card ── */
   .card {
@@ -781,7 +783,12 @@
 
   <div class="instructions">
     <div class="instructions-icon">→</div>
-    <p><strong>How this works:</strong> For each of your team members, select five colleagues (feedback providers) below. Once done, hit <strong>Submit</strong> — the respective colleagues then receive an email requesting their feedback for the specific team member along with the deadline you set mentioned in the email. Their responses are then emailed to you once completed for your reference. Use the <strong>GTG Org Chart</strong> via the button above to view everyone in the company for inspiration on who to select as feedback providers.</p>
+    <div class="instructions-text">
+      <p><strong>How this works:</strong></p>
+      <p>For each of your team members, select five colleagues (feedback providers) below.</p>
+      <p>Once done, hit <strong>Submit</strong> — the respective colleagues then receive an email requesting their feedback for the specific team member along with the deadline you set mentioned in the email. Their responses are then emailed to you once completed for your reference.</p>
+      <p>Use the <strong>GTG Org Chart</strong> via the button above to view everyone in the company for inspiration on who to select as feedback providers.</p>
+    </div>
   </div>
 
   <!-- Manager details -->

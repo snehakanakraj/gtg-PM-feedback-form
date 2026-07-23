@@ -134,6 +134,26 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
+  .org-chart-badge {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal-deep);
+    background: #DFB97E;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 18px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+  .org-chart-badge:hover {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+  }
 
   /* ── Hero band ── */
   .hero {
@@ -718,6 +738,7 @@
     <div class="logo-sub">People &amp; Culture</div>
   </div>
   <div class="header-right">
+    <a class="org-chart-badge" href="GTG_Org_Chart.html" target="_blank" rel="noopener">GTG Org Chart</a>
     <div class="cycle-badge" id="cycle-badge">GTG H1 2026</div>
     <div class="user-chip" id="user-chip">
       <div class="user-avatar" id="user-avatar">?</div>
@@ -748,7 +769,7 @@
 
 <!-- Hero -->
 <div class="hero">
-  <div class="hero-eyebrow">Peer Feedback Programme</div>
+  <div class="hero-eyebrow">Performance Management - Feedback Collection Process</div>
   <h1>Line manager submission</h1>
   <p>Select your team members below and choose their feedback providers to get started.</p>
 </div>
@@ -760,7 +781,7 @@
 
   <div class="instructions">
     <div class="instructions-icon">→</div>
-    <p><strong>How this works:</strong> For each of your team members, select five colleagues (feedback providers) below. Once done, hit <strong>Submit</strong> — the respective colleagues then receive an email requesting their feedback for the specific team member along with the deadline you set mentioned in the email. Their responses are then emailed to you once completed for your reference.</p>
+    <p><strong>How this works:</strong> For each of your team members, select five colleagues (feedback providers) below. Once done, hit <strong>Submit</strong> — the respective colleagues then receive an email requesting their feedback for the specific team member along with the deadline you set mentioned in the email. Their responses are then emailed to you once completed for your reference. Use the <strong>GTG Org Chart</strong> via the button above to view everyone in the company for inspiration on who to select as feedback providers.</p>
   </div>
 
   <!-- Manager details -->
@@ -826,6 +847,7 @@ const STAFF = [
   {name:"Alexander Mears",email:"Alexander@globalthinkgroup.com",dept:"English Content",title:"Senior Content Manager",manager:"Andrew Peters"},
   {name:"Andrew Brown",email:"andrew.b@globalthinkgroup.com",dept:"Digital",title:"Digital Manager",manager:"Shane Horgan"},
   {name:"Andrew Peters",email:"andrew@globalthinkgroup.com",dept:"English Content",title:"Associate Content Director",manager:"Marco Binenti"},
+  {name:"Andrianna Dafnis",email:"Andrianna@globalthinkgroup.com",dept:"Leadership",title:"Managing Partner",manager:""},
   {name:"Arshad Mahmood",email:"arshad@globalthinkgroup.com",dept:"Corporate",title:"Business Operations Coordinator",manager:"Salim Abduljawad"},
   {name:"Bashar Koheji",email:"Bashar@globalthinkgroup.com",dept:"English Content",title:"Content Writer",manager:"Alexander Mears"},
   {name:"Basmah Ali",email:"Basmah@globalthinkgroup.com",dept:"Consulting",title:"Account Manager",manager:"Zena Afara"},
@@ -851,6 +873,7 @@ const STAFF = [
   {name:"Louie Tejuco",email:"louie@globalthinkgroup.com",dept:"Design",title:"Multimedia Designer",manager:"Hoda El Achi"},
   {name:"Lynne-Ann Abrahams",email:"lynne@globalthinkgroup.com",dept:"English Content",title:"Senior Content Manager",manager:"Andrew Peters"},
   {name:"Mada AlAgel",email:"Mada@globalthinkgroup.com",dept:"Arabic Content",title:"Arabic Content Manager",manager:"Andrianna Dafnis"},
+  {name:"Marco Binenti",email:"Marco@globalthinkgroup.com",dept:"Leadership",title:"Partner",manager:""},
   {name:"Michael Luk",email:"Michael@globalthinkgroup.com",dept:"Consulting",title:"Associate Director",manager:"Jack McGee"},
   {name:"Mohammed Jabr",email:"mohammed@globalthinkgroup.com",dept:"Corporate",title:"Accountant",manager:"Abdulrahman Anwar Shahada"},
   {name:"Natalie Greve",email:"natalie@globalthinkgroup.com",dept:"English Content",title:"Senior Content Manager",manager:"Andrew Peters"},

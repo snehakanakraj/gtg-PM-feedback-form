@@ -785,7 +785,7 @@
     <div class="instructions-icon">→</div>
     <div class="instructions-text">
       <p><strong>How this works:</strong></p>
-      <p>For each of your team members, select five colleagues (feedback providers) below.</p>
+      <p>For each of your team members, select five colleagues (feedback providers) below. Names must be selected from the suggested dropdown list — free-typed names that don't match the staff directory won't be accepted.</p>
       <p>Once done, hit <strong>Submit</strong> — the respective colleagues then receive an email requesting their feedback for the specific team member along with the deadline you set mentioned in the email. Their responses are then emailed to you once completed for your reference.</p>
       <p>Use the <strong>GTG Org Chart</strong> via the button above to view everyone in the company for inspiration on who to select as feedback providers.</p>
     </div>
@@ -1113,6 +1113,11 @@ function autoPopulateDirectReports(managerName) {
       fillEmpAuto(id, staff);
       document.getElementById(`emp-hname-${id}`).textContent = staff.name;
     });
+    enforceDirectoryMatch(nameInput, () => {
+      fillEmpAuto(id, null);
+      document.getElementById(`emp-hname-${id}`).textContent = `Employee ${id}`;
+      updateSummary();
+    });
 
     for (let i = 0; i < 5; i++) addReviewer(id);
     updateSummary();
@@ -1235,6 +1240,11 @@ function addEmployee() {
     fillEmpAuto(id, staff);
     document.getElementById(`emp-hname-${id}`).textContent = staff.name;
   });
+  enforceDirectoryMatch(nameInput, () => {
+    fillEmpAuto(id, null);
+    document.getElementById(`emp-hname-${id}`).textContent = `Employee ${id}`;
+    updateSummary();
+  });
 
   for (let i = 0; i < 5; i++) addReviewer(id);
   updateSummary();
@@ -1243,6 +1253,25 @@ function addEmployee() {
 function fillEmpAuto(id, staff) {
   document.getElementById(`emp-email-${id}`).value = staff ? staff.email : '';
   document.getElementById(`emp-dept-${id}`).value  = staff ? staff.dept  : '';
+}
+
+// Enforces that a name field must exactly match someone from the staff
+// directory (i.e. was picked from the dropdown). If the person types
+// something that doesn't match a real staff member and then clicks away,
+// the entry is cleared so it can never be submitted as a "ghost" name
+// with no email attached.
+function enforceDirectoryMatch(input, onClear) {
+  input.addEventListener('blur', () => {
+    // slight delay so a mousedown-selected suggestion has time to fill the field first
+    setTimeout(() => {
+      const val = input.value.trim();
+      if (val && !findStaff(val)) {
+        input.value = '';
+        if (onClear) onClear();
+        showToast('Please select a name from the suggested list — free-text names can\'t be submitted.', 'error');
+      }
+    }, 150);
+  });
 }
 
 function toggleEmp(id) {
@@ -1288,6 +1317,10 @@ function addReviewer(empId) {
   });
   attachAutocomplete(nameInput, staff => {
     document.getElementById(`rev-email-${rid}`).value = staff.email;
+  });
+  enforceDirectoryMatch(nameInput, () => {
+    document.getElementById(`rev-email-${rid}`).value = '';
+    updateSummary();
   });
 
   updateRevCounter(empId);
@@ -1355,11 +1388,15 @@ async function submitToSharePoint() {
   for (const id of empIds) {
     const name  = document.getElementById(`emp-name-${id}`)?.value.trim();
     const email = document.getElementById(`emp-email-${id}`)?.value.trim();
-    if (!name || !email) { showToast(`Please select a name from the dropdown for employee ${id}.`, 'error'); return; }
-    const filled = (employees[id]?.reviewers||[]).filter(rid => document.getElementById(`rev-name-${rid}`)?.value.trim());
+    if (!name || !email || !findStaff(name)) { showToast(`Please select a name from the dropdown for employee ${id}.`, 'error'); return; }
+    const filled = (employees[id]?.reviewers||[]).filter(rid => {
+      const rName  = document.getElementById(`rev-name-${rid}`)?.value.trim();
+      const rEmail = document.getElementById(`rev-email-${rid}`)?.value.trim();
+      return rName && rEmail && findStaff(rName);
+    });
     if (filled.length < 5) {
       const empName = name || `Employee ${id}`;
-      showToast(`${empName} needs exactly 5 colleagues selected. Currently ${filled.length} added.`, 'error');
+      showToast(`${empName} needs exactly 5 colleagues selected from the staff directory. Currently ${filled.length} valid.`, 'error');
       return;
     }
   }
